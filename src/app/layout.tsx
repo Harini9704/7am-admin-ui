@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import { Header } from "@/Header";
 import { useReducer } from "react";
 import { reducer } from "../redux/reducer";
@@ -10,6 +11,7 @@ import {Provider} from "../context/appCtx";
 import { Footer } from "@/Footer";
 import { Menu } from "@/Menu";
 import { Login } from "@/Login";
+import { Input } from "@/common/componentt/Input";
 
 const inter = Inter({ subsets: ["latin"] });
 
