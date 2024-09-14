@@ -2,24 +2,14 @@ import { Input} from '@/common/components/Input'
 import { appCtx } from '@/context/appCtx'
 import React, { useContext,useState} from 'react'
 import config from './config.json'
-
-
- export const Login = ()=> {
+import { handleFieldLevelValidation, handleFormLevelValidation } from '@/common/services/validations'
+export const Login = ()=> {
     const [inputControls,setInputControls]=useState(config)
     const ctxData = useContext (appCtx)
     const fnLogin = () => {
-    const  clonedInputControls=JSON.parse(JSON.stringify(inputControls))
-    const dataObj:any={}
-    clonedInputControls.forEach((obj:any)=>{
-        dataObj[obj.name]=obj.value;
-        obj.hasError=!
-        obj.value
-    })
-      const isInValid=clonedInputControls.some((obj:any)=>obj.hasError)
-      if(isInValid) {
-        setInputControls(clonedInputControls)
-        return;
-      }
+    
+      const [isInValid, dataObj]: any = handleFormLevelValidation(inputControls, setInputControls)
+            if (isInValid) return;
       alert(JSON.stringify(dataObj))
          // ctxData.dispatch({
         //  type:"LOGIN",
@@ -27,21 +17,10 @@ import config from './config.json'
         // })
     }
     
-    const handleChange = (eve:any) =>{
-           const {name,value}= eve ?.target
-           const clonedInputControls=JSON.parse(JSON.stringify(inputControls))
-          let  inputObj:any = clonedInputControls.find((obj:any)=>{
-            return obj.name===name
-           })
-           
-           inputObj.value=value
-           inputObj.hasError=!value
-
-
-         setInputControls(clonedInputControls)
-       
-    }
-
+    const handleChange = (eve: any) => {
+      handleFieldLevelValidation(eve, inputControls, setInputControls)
+  }
+    
   return (
     <div className='container-fluid'> 
        <h3 className = 'mt-3 wb-3 text-center'>Login</h3>
