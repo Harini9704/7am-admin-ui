@@ -17,8 +17,8 @@ const regEx: any = {
     }
 }
 
-function validate(inputObj:any){
-    inputObj.errorMsg="";
+function validate(inputObj: any) {
+    inputObj.errorMsg = "";
     for (let val of inputObj?.criteria) {
         const { pattern, message } = regEx[val]
         if (!pattern.test(inputObj?.value)) {
@@ -28,29 +28,26 @@ function validate(inputObj:any){
     }
 }
 
-
 export function handleFieldLevelValidation(eve: any, inputControls: any, setInputControls: any) {
     const { name, value } = eve?.target
     const clonedInputControls = JSON.parse(JSON.stringify(inputControls))
     let inputObj: any = clonedInputControls.find((obj: any) => {
         return obj.name === name
-
     })
-   
-    inputObj.value=value;
+    inputObj.value = value;
     validate(inputObj)
     setInputControls(clonedInputControls)
-    }
+}
 
-   export function handleFormLevelValidation(inputControls:any,setInputControls:any) {
-    const  clonedInputControls=JSON.parse(JSON.stringify(inputControls))
-    const dataObj:any={}
-    clonedInputControls.forEach((obj:any)=>{
-        dataObj[obj.name]=obj.value;
-      validate(obj)
+export function handleFormLevelValidation(inputControls: any, setInputControls: any) {
+    const clonedInputControls = JSON.parse(JSON.stringify(inputControls))
+    const dataObj: any = {}
+    clonedInputControls.forEach((obj: any) => {
+        dataObj[obj.name] = obj.value;
+        validate(obj)
     })
-    const isInValid=clonedInputControls.some((obj:any)=>obj.errorMsg)
+    const isInValid = clonedInputControls.some((obj: any) => obj.errorMsg)
     setInputControls(clonedInputControls)
-    
-    return [isInValid,dataObj]
+
+    return [isInValid, dataObj]
 }

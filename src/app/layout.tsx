@@ -11,7 +11,9 @@ import {Provider} from "../context/appCtx";
 import { Footer } from "@/Footer";
 import { Menu } from "@/Menu";
 import { Login } from "@/Login";
-import { Input } from "@/common/componentt/Input";
+import { Input } from "@/common/components/Input";
+import { Loader } from "@/common/components/Loader/Loader";
+import { Toaster } from "@/common/components/Toaster/Toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,10 +34,10 @@ export default function RootLayout({
         <Provider value = {{state,dispatch}}>
           <Header />
           {state?.isLoggedIn ? <Menu /> : <Login />}
-      
           <Footer />
+          {state?.isShowLoader && <Loader />}
+           {state?.toaster?.isShowToaster && <Toaster/>}
         </Provider>
-      
         </body>
     </html>
   );
